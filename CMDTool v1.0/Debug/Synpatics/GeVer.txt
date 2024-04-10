@@ -1,0 +1,2 @@
+command line 取得版本, 產生update.log, 可從update.log 讀出版本
+VmmUpdate -v

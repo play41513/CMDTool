@@ -1,0 +1,213 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  ClientHeight = 394
+  ClientWidth = 383
+  Color = clBtnHighlight
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object plMassProduction: TPanel
+    Left = 0
+    Top = 0
+    Width = 383
+    Height = 394
+    Align = alClient
+    TabOrder = 0
+    ExplicitLeft = 24
+    ExplicitTop = 33
+    ExplicitWidth = 538
+    ExplicitHeight = 442
+    object Panel6: TPanel
+      Left = 1
+      Top = 57
+      Width = 381
+      Height = 24
+      Align = alTop
+      Alignment = taLeftJustify
+      BevelOuter = bvNone
+      Caption = '   Name'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = cl3DDkShadow
+      Font.Height = -17
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      ExplicitWidth = 376
+    end
+    object Panel7: TPanel
+      Left = 1
+      Top = 122
+      Width = 381
+      Height = 24
+      Align = alTop
+      Alignment = taLeftJustify
+      BevelOuter = bvNone
+      Caption = '   CommandLine'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = cl3DDkShadow
+      Font.Height = -17
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      ExplicitWidth = 376
+    end
+    object plName: TPanel
+      Left = 1
+      Top = 81
+      Width = 381
+      Height = 41
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'VMM5220'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clHotLight
+      Font.Height = -33
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      ExplicitLeft = -55
+      ExplicitTop = 115
+      ExplicitWidth = 536
+    end
+    object plCMDLine: TPanel
+      Left = 1
+      Top = 146
+      Width = 381
+      Height = 41
+      Align = alTop
+      BevelOuter = bvNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -20
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+      ExplicitTop = 186
+      ExplicitWidth = 575
+    end
+    object Panel3: TPanel
+      Left = 1
+      Top = 187
+      Width = 381
+      Height = 24
+      Align = alTop
+      Alignment = taLeftJustify
+      BevelOuter = bvNone
+      Caption = '   ReportMsg'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = cl3DDkShadow
+      Font.Height = -17
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+      ExplicitWidth = 376
+    end
+    object plResult: TPanel
+      Left = 1
+      Top = 338
+      Width = 381
+      Height = 55
+      Align = alBottom
+      BevelOuter = bvNone
+      Caption = 'Wait...'
+      Color = clCream
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -24
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 5
+      ExplicitTop = 408
+      ExplicitWidth = 376
+    end
+    object Panel5: TPanel
+      Left = 1
+      Top = 1
+      Width = 381
+      Height = 56
+      Align = alTop
+      Alignment = taLeftJustify
+      BevelOuter = bvNone
+      Caption = 'CMD Tool'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 6
+      ExplicitWidth = 376
+    end
+    object Panel8: TPanel
+      Left = 1
+      Top = 211
+      Width = 381
+      Height = 119
+      Align = alClient
+      BevelOuter = bvNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clHotLight
+      Font.Height = -11
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
+      ExplicitLeft = 25
+      ExplicitTop = 305
+      ExplicitWidth = 536
+      ExplicitHeight = 77
+      object moReport: TMemo
+        Left = 41
+        Top = 0
+        Width = 296
+        Height = 119
+        Align = alLeft
+        Enabled = False
+        ReadOnly = True
+        TabOrder = 0
+        ExplicitHeight = 77
+      end
+      object Panel9: TPanel
+        Left = 0
+        Top = 0
+        Width = 41
+        Height = 119
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitHeight = 57
+      end
+    end
+    object Panel1: TPanel
+      Left = 1
+      Top = 330
+      Width = 381
+      Height = 8
+      Align = alBottom
+      BevelOuter = bvNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -20
+      Font.Name = 'Microsoft YaHei UI'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 8
+      ExplicitTop = 400
+      ExplicitWidth = 376
+    end
+  end
+end

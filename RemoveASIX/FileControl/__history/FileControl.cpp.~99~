@@ -1,0 +1,129 @@
+//---------------------------------------------------------------------------
+
+
+#pragma hdrstop
+
+#include <vcl.h>
+#include "FileControl.h"
+//---------------------------------------------------------------------------
+
+#pragma package(smart_init)
+
+cFileControl::cFileControl(INI_DESCRIPOR *ini)
+{
+	INI_Desc = ini;
+}
+bool cFileControl::FindINIFile()
+{
+	TSearchRec Sr;
+	TStringList*FileList=new TStringList();
+	if(FindFirst("Audio\\*.ini",faAnyFile,Sr)==0)
+	{
+		do
+		{
+			FileList->Add(Sr.Name);
+		}
+		while(FindNext(Sr)==0);
+		FindClose(Sr);
+	}
+	if(FileList->Count>1||FileList->Count==0)
+	{
+		delete FileList;
+		return false;
+	}
+	else
+	{
+		strSettingINI = ExtractFilePath(Application->ExeName)+FileList->Strings[0];
+        ReadINIFile();
+		delete FileList;
+		return true;
+	}
+}
+void cFileControl::ReadINIFile()
+{
+	AnsiString value;
+	TIniFile *ini;
+	String fn = ChangeFileExt(strSettingINI, ".ini");
+	ini = new TIniFile(fn);
+	INI_Desc->ININame		= ini->ReadString("Tool","name","Name");
+	INI_Desc->ToolName      = ini->ReadString("Tool","name","Name");
+	INI_Desc->Cmdline       = ini->ReadString("Tool","cmd","");
+	INI_Desc->bReportingMethodIsFile = ini->ReadBool("Tool","reportingfile",false);
+	INI_Desc->FileName 		= ini->ReadString("Tool","filename","");
+	INI_Desc->dwContentLineCount	= ini->ReadInteger("Tool","ContentLineCount",0);
+
+	INI_Desc->bStereo  		= ini->ReadBool("TestingParameters","mic_stereo",false);
+	INI_Desc->dwStartDelay 	= ini->ReadInteger("TestingParameters","start_delay",1000);
+	INI_Desc->bAutoVolume   = ini->ReadBool("TestingParameters","volume_correct",true);
+	INI_Desc->dwTestingTime = ini->ReadInteger("TestingParameters","testing_time",1000);
+
+	INI_Desc->dwAudioVolumeFixture = ini->ReadInteger("AduioParameters","fixture_volume",20);
+	INI_Desc->dwAudioVolumeProduct = ini->ReadInteger("AduioParameters","product_volume",20);
+	INI_Desc->strMonoOutWAV        = ini->ReadString("AduioParameters","mono_out_wav","L1R2SinWave.wav");
+	INI_Desc->strMonoInWAV         = ini->ReadString("AduioParameters","mono_in_wav","L1R1SinWave.wav");
+	INI_Desc->strStereoOutWAV      = ini->ReadString("AduioParameters","stereo_out_wav","L1R2SinWave.wav");
+	INI_Desc->strStereoInWAV       = ini->ReadString("AduioParameters","stereo_in_wav","L1R2SinWave.wav");
+
+	INI_Desc->dwWAVE_LL_Vertex     = ini->ReadInteger("AnalysisParameters","wave_lower_limit_vertex",20000);
+	INI_Desc->dwWAVE_UL_Vertex     = ini->ReadInteger("AnalysisParameters","wave_upper_limit_vertex",30000);
+	INI_Desc->dwFFT_Vertex         = ini->ReadInteger("AnalysisParameters","fft_vertex",10);
+	INI_Desc->dwVolumeRange        = ini->ReadInteger("AnalysisParameters","volume_range",10);
+	INI_Desc->dbCrest			   = ini->ReadFloat("AnalysisParameters","crest_%",5)/100;
+	INI_Desc->dbFreq			   = ini->ReadFloat("AnalysisParameters","freq_%",5)/100;
+	INI_Desc->dbBalance			   = ini->ReadFloat("AnalysisParameters","channel_balance_%",5)/100;
+}
+void cFileControl::WriteINIFile(INI_DESCRIPOR info)
+{     /*
+	TIniFile *ini;
+	String fn = ChangeFileExt(strSettingINI, ".ini");
+	if (!FileExists(fn)) {
+		return;
+	}
+	ini = new TIniFile(fn);
+	INI_Desc = info;
+	//
+	ini->WriteBool("DUT_VPID_AUTO_TEST","AUTO"
+		,INI_Desc.VPID_AutoTest);
+	ini->WriteString("DUT_VPID_AUTO_TEST","PIDVID"
+		,"vid_"+INI_Desc.Auto_VID+"&pid_"+INI_Desc.Auto_PID);
+	//
+	ini->WriteBool("DUT_VOLTAGE_AUTO_TEST","AUTO",INI_Desc.Voltage_AutoTest);
+	ini->WriteString("DUT_VOLTAGE_AUTO_TEST","Voltage_Value",INI_Desc.Auto_VoltageValue);
+
+	for(int i = 0 ; i < 5 ; i++)
+	{
+		ini->WriteString("PD_"+AnsiString(i+1),"Voltage"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].PD_Voltage);
+		ini->WriteBool("PD_"+AnsiString(i+1),"TEST"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].bTest);
+		ini->WriteString("PD_"+AnsiString(i+1),"NoLoadVoltageRange_Min"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].NoLoadMinVoltage);
+		ini->WriteString("PD_"+AnsiString(i+1),"NoLoadVoltageRange_Max"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].NoLoadMaxVoltage);
+		ini->WriteString("PD_"+AnsiString(i+1),"FullLoadVoltageRange_Min"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].FullLoadMinVoltage);
+		ini->WriteString("PD_"+AnsiString(i+1),"FullLoadVoltageRange_Max"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].FullLoadMaxVoltage);
+		ini->WriteString("PD_"+AnsiString(i+1),"LoadCurrent"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].FullLoadCurrent);
+		ini->WriteString("PD_"+AnsiString(i+1),"InitLoadCurrent"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].FullInitLoadCurrent);
+		ini->WriteInteger("PD_"+AnsiString(i+1),"LoadTime"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwLoadTime);
+		//
+		ini->WriteInteger("PD_"+AnsiString(i+1),"BeforeChangeVoltageDelay"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwBeforeChangeVoltageDelay);
+		ini->WriteInteger("PD_"+AnsiString(i+1),"AfterChangeVoltageDelay"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwAfterChangeVoltageDelay);
+		ini->WriteInteger("PD_"+AnsiString(i+1),"BeforeFullLoadTestDelay"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwBeforeFullLoadDelay);
+		ini->WriteInteger("PD_"+AnsiString(i+1),"AfterFullLoadTestDelay"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwAfterFullLoadDelay);
+		ini->WriteInteger("PD_"+AnsiString(i+1),"AfterTestDelay"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].dwAfterTestDelay);
+		ini->WriteString("PD_"+AnsiString(i+1),"LossVoltage"
+			,INI_Desc.PITEM_PD_DESCRIPOR[i].LossVol);
+	}
+	//
+	delete ini;  */
+}
